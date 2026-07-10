@@ -1,4 +1,4 @@
-name: debug
+name: degrade
 
 on:
   workflow_dispatch:
