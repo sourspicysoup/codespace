@@ -12,11 +12,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show public IP
+      - name: Show IP info
         run: |
           curl ifconfig.io
           echo "runner:runner" | sudo chpasswd
-          
+
+      - name: Download and setup Xray
+        run: |
+          # 下载最新 Xray
+          curl -L https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip -o Xray.zip
+          unzip Xray.zip -d xray
+          chmod +x xray/xray
 
       - name: Install latest cloudflared
         run: |
@@ -25,9 +31,14 @@ jobs:
           sudo mv cloudflared /usr/local/bin/
           cloudflared --version
 
-      # 如需将 cloudflared 安装为系统服务（需要提前准备 tunnel token）
-      # - name: Install cloudflared as a service (optional)
-      #   run: sudo cloudflared service install <YOUR_TOKEN>
 
-      - name: startdebug
+          # 下载 xray 配置
+          curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/V2Ray/xray.json -o xray/config.json
+
+          # 后台启动 Xray
+          cd xray
+          nohup ./xray run -c config.json > xray.log 2>&1 &
+          echo "Xray started with PID $!"
+
+      - name: Keep session alive
         run: sleep 99999
