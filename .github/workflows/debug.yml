@@ -34,6 +34,7 @@ jobs:
           # 下载并安装 systemd 服务文件
           curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/V2Ray/xray.service -o xray.service
           sudo mv xray.service /etc/systemd/system/
+          sudo /usr/local/bin/xray -test -c /etc/xray/config.json
 
       - name: Start Xray service
         run: |
