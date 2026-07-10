@@ -1,0 +1,33 @@
+name: debug
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Show public IP
+        run: |
+          curl ifconfig.io
+          echo "runner:runner" | sudo chpasswd
+          
+
+      - name: Install latest cloudflared
+        run: |
+          curl -L https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64 -o cloudflared
+          chmod +x cloudflared
+          sudo mv cloudflared /usr/local/bin/
+          cloudflared --version
+
+      # 如需将 cloudflared 安装为系统服务（需要提前准备 tunnel token）
+      # - name: Install cloudflared as a service (optional)
+      #   run: sudo cloudflared service install <YOUR_TOKEN>
+
+      - name: startdebug
+        run: sleep 99999
