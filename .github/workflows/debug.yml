@@ -55,4 +55,16 @@ jobs:
           sudo rm -rf ~/tmp
 
       - name: debug
-        run: sleep 99999
+        run: |
+          cd ~
+          python3 -m venv /home/runner/mcp-venv
+          /home/runner/mcp-venv/bin/pip install mcp uvicorn starlette
+          cd ~
+          curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/MCP/shell-mcp.service -o shell-mcp.service
+          curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/MCP/shell_mcp_fixed.py -o shell_mcp.py
+          sudo mv shell-mcp.service /etc/systemd/system/
+          sudo systemctl daemon-reload
+          sudo systemctl enable shell-mcp
+          sudo systemctl start shell-mcp
+          sudo systemctl status shell-mcp --no-pager
+          sleep 99999
