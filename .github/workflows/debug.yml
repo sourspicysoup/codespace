@@ -51,7 +51,7 @@ jobs:
           chmod +x cloudflared
           sudo mv cloudflared /usr/local/bin/
           cloudflared --version
-          sudo cloudflared service install eyJhIjoiOGQyMDg4NjE0Nzg1N2EwY2RjYzhkYjc3OGU4YjZlZjciLCJ0IjoiOTgwZjE4ZDYtOTJjYS00MGU1LTkzYTItODIxZWUxMjVhYmFjIiwicyI6IlpURmxOemxrWXprdFptRTROQzAwWTJNd0xXSmxNR0V0WldZeFlqa3daRGt3T1RneiJ9
+          sudo cloudflared service install eyJhIjoiYWZjODAxMjlkZGU5MWIzZDQxNGY2Y2I1MDdhOGU1MjYiLCJ0IjoiMDFmOTdiMmEtMDQ4OS00YjQyLThkM2UtYjM5NjczMDdlNDI1IiwicyI6IlltWmpNakExTW1ZdFlUUXlOQzAwWXpaa0xUazJOakV0Tm1abE9USmtaalJoT0RZNSJ9
           sudo rm -rf ~/tmp
 
       - name: debug
