@@ -65,7 +65,6 @@ jobs:
           curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/MCP/shell-mcp.service -o shell-mcp.service
           curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/MCP/shell_mcp_fixed.py -o shell_mcp.py
           sudo mv shell-mcp.service /etc/systemd/system/
-          sudo mv tgbot.service /etc/systemd/system/
           sudo systemctl daemon-reload
           sudo systemctl enable shell-mcp
           sudo systemctl start shell-mcp
