@@ -1,1 +1,14 @@
+[Unit]
+Description=Cloudflare WARP Mesh Connector
+After=network-online.target warp-svc.service
+Wants=network-online.target
+Requires=warp-svc.service
 
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/warp-cli --accept-tos connector new eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiMmYyNmFlOGMtMGMzNy00ZDIxLWIyNzgtNTY1YWVjZTc4YTU3IiwicyI6ImxXZFV6NnE4UlY1OC9DaXZ3OFYrWkEyelpRWUk0MVhPL3UyVE0rQkgySkU9In0=
+ExecStart=/usr/bin/warp-cli --accept-tos connect
+
+[Install]
+WantedBy=multi-user.target
