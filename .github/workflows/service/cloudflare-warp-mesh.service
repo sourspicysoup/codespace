@@ -7,7 +7,7 @@ Requires=warp-svc.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/warp-cli --accept-tos connector new eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiMmYyNmFlOGMtMGMzNy00ZDIxLWIyNzgtNTY1YWVjZTc4YTU3IiwicyI6ImxXZFV6NnE4UlY1OC9DaXZ3OFYrWkEyelpRWUk0MVhPL3UyVE0rQkgySkU9In0=
+ExecStart=/usr/bin/warp-cli --accept-tos connector new eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiM2Q1NzViMTQtYjAyMS00YWQxLWI4YzYtMDU4Y2U2MmQ0YzFlIiwicyI6InVOT3Q0TitCZlNoOVhvMkx0cVRsRERwVVl3SWtDYysyYlRoVHp6QytkMFE9In0=
 ExecStart=/usr/bin/warp-cli --accept-tos connect
 
 [Install]
