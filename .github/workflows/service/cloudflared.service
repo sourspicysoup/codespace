@@ -1,0 +1,14 @@
+[Unit]
+Description=Cloudflare Tunnel (cloudflared)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/cloudflared tunnel run --token eyJhIjoiODZlNGJjMzUyYTY0ODMwMDI1MzUxMTFmYzQxZmM1NjUiLCJ0IjoiOGIwMjRjMzctZjhjMC00ZWQ2LWJmNmMtY2M0ZDVjM2M3NjBiIiwicyI6Ik5XTXlaamt3TldVdFlqWTJaQzAwTURreUxUZzVOR1F0TjJNM01Ea3lObVk1TVRSbCJ9
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target
