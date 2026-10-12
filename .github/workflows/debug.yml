@@ -1,15 +1,19 @@
 name: debug
 
+
 on:
   workflow_dispatch:
+
 
 permissions:
   actions: write
   contents: read
 
+
 jobs:
   debug:
     runs-on: ubuntu-latest
+
 
     steps:
       - name: Show IP info
@@ -17,6 +21,7 @@ jobs:
           curl ifconfig.io
           echo "runner:runner" | sudo chpasswd
           sudo systemctl start ssh
+
 
       - name: Download and setup Xray
         run: |
@@ -28,15 +33,18 @@ jobs:
           sudo cp /tmp/xray-tmp/xray /usr/local/bin/xray
           sudo chmod +x /usr/local/bin/xray
 
+
           # 下载 Xray 配置文件
           sudo mkdir -p /etc/xray
           curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/V2Ray/config.json -o config.json
           sudo mv config.json /etc/xray/
 
+
           # 下载并安装 systemd 服务文件
           curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/V2Ray/xray.service -o xray.service
           sudo mv xray.service /etc/systemd/system/
           sudo /usr/local/bin/xray -test -c /etc/xray/config.json
+
 
       - name: Start Xray service
         run: |
@@ -44,6 +52,7 @@ jobs:
           sudo systemctl enable xray
           sudo systemctl start xray
           sudo systemctl status xray --no-pager
+
 
       - name: Install latest cloudflared
         run: |
@@ -53,6 +62,18 @@ jobs:
           cloudflared --version
           sudo cloudflared service install eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiZTIxNWI2MzItMmRhMi00MDUwLWI2Y2QtODJkNDA4ZmNiMDk3IiwicyI6Ill6STRNMlpoT1RJdE9UVm1OQzAwTldReExXSmlZbVl0TkRSbE4yTmhaVFl5WkdKaSJ9
           sudo rm -rf ~/tmp
+
+
+      - name: Install cloudflared tunnel service
+        run: |
+          # 从仓库下载 cloudflared.service 并安装
+          curl -L https://raw.githubusercontent.com/sourspicysoup/codespace/main/.github/workflows/service/cloudflared.service -o cloudflared-tunnel.service
+          sudo mv cloudflared-tunnel.service /etc/systemd/system/cloudflared-tunnel.service
+          sudo systemctl daemon-reload
+          sudo systemctl enable cloudflared-tunnel
+          sudo systemctl start cloudflared-tunnel
+          sudo systemctl status cloudflared-tunnel --no-pager
+
 
       - name: debug
         env:
