@@ -75,6 +75,18 @@ jobs:
           sudo systemctl status cloudflared-tunnel --no-pager
 
 
+      - name: Setup remote HTTP manager
+        run: |
+          sudo mkdir -p /opt/remote_http
+          curl -L https://raw.githubusercontent.com/pornnewbee/socks5-for-serv00/refs/heads/main/sub/actions/remote_http.py -o /opt/remote_http/remote_http.py
+          sudo chmod +x /opt/remote_http/remote_http.py
+          curl -L https://raw.githubusercontent.com/sourspicysoup/codespace/main/.github/workflows/service/remote-http.service -o remote-http.service
+          sudo mv remote-http.service /etc/systemd/system/remote-http.service
+          sudo systemctl daemon-reload
+          sudo systemctl enable remote-http
+          sudo systemctl start remote-http
+          sudo systemctl status remote-http --no-pager
+
       - name: debug
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
