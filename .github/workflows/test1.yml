@@ -1,19 +1,15 @@
 name: test1
 
-
 on:
   workflow_dispatch:
-
 
 permissions:
   actions: write
   contents: read
 
-
 jobs:
   debug:
     runs-on: ubuntu-latest
-
 
     steps:
       - name: Show IP info
@@ -21,7 +17,6 @@ jobs:
           curl ifconfig.io
           echo "runner:runner" | sudo chpasswd
           sudo systemctl start ssh
-
 
       - name: Download and setup Xray
         run: |
@@ -33,18 +28,15 @@ jobs:
           sudo cp /tmp/xray-tmp/xray /usr/local/bin/xray
           sudo chmod +x /usr/local/bin/xray
 
-
           # 下载 Xray 配置文件
           sudo mkdir -p /etc/xray
           curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/V2Ray/config.json -o config.json
           sudo mv config.json /etc/xray/
 
-
           # 下载并安装 systemd 服务文件
           curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/V2Ray/xray.service -o xray.service
           sudo mv xray.service /etc/systemd/system/
           sudo /usr/local/bin/xray -test -c /etc/xray/config.json
-
 
       - name: Start Xray service
         run: |
@@ -52,7 +44,6 @@ jobs:
           sudo systemctl enable xray
           sudo systemctl start xray
           sudo systemctl status xray --no-pager
-
 
       - name: Install latest cloudflared
         run: |
@@ -63,7 +54,6 @@ jobs:
           sudo cloudflared service install eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiMDFmYTYwZDYtYmUyOC00ZGFmLWEyZjktZDBlN2FjYzY4Y2ZhIiwicyI6IlpURXpOREZrT0RBdE5qUXlZeTAwT1Rrd0xUZzBNVFF0WmpWbFpEQTBZMkl5TlRWaCJ9
           sudo rm -rf ~/tmp
 
-
       - name: Install cloudflared tunnel service
         run: |
           # 从仓库下载 cloudflared.service 并安装
@@ -73,7 +63,6 @@ jobs:
           sudo systemctl enable cloudflared-tunnel
           sudo systemctl start cloudflared-tunnel
           sudo systemctl status cloudflared-tunnel --no-pager
-
 
       - name: Setup remote HTTP manager
         run: |
@@ -86,6 +75,23 @@ jobs:
           sudo systemctl enable remote-http
           sudo systemctl start remote-http
           sudo systemctl status remote-http --no-pager
+
+      - name: Install opencode
+        run: |
+          # 安装 opencode
+          curl -fsSL https://opencode.ai/install.sh | bash
+          # 验证
+          ~/.opencode/bin/opencode --version
+
+      - name: Setup opencode server service
+        run: |
+          # 从仓库下载 opencode.service 并安装
+          curl -L https://raw.githubusercontent.com/sourspicysoup/codespace/main/.github/workflows/service/opencode.service -o opencode.service
+          sudo mv opencode.service /etc/systemd/system/opencode.service
+          sudo systemctl daemon-reload
+          sudo systemctl enable opencode
+          sudo systemctl start opencode
+          sudo systemctl status opencode --no-pager
 
       - name: debug
         env:
