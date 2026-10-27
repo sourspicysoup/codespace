@@ -54,16 +54,6 @@ jobs:
           sudo cloudflared service install eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiMDFmYTYwZDYtYmUyOC00ZGFmLWEyZjktZDBlN2FjYzY4Y2ZhIiwicyI6IlpURXpOREZrT0RBdE5qUXlZeTAwT1Rrd0xUZzBNVFF0WmpWbFpEQTBZMkl5TlRWaCJ9
           sudo rm -rf ~/tmp
 
-      - name: Install cloudflared tunnel service
-        run: |
-          # 从仓库下载 cloudflared.service 并安装
-          curl -L https://raw.githubusercontent.com/sourspicysoup/codespace/main/.github/workflows/service/cloudflared.service -o cloudflared-tunnel.service
-          sudo mv cloudflared-tunnel.service /etc/systemd/system/cloudflared-tunnel.service
-          sudo systemctl daemon-reload
-          sudo systemctl enable cloudflared-tunnel
-          sudo systemctl start cloudflared-tunnel
-          sudo systemctl status cloudflared-tunnel --no-pager
-
       - name: Setup remote HTTP manager
         run: |
           sudo mkdir -p /opt/remote_http
@@ -85,13 +75,13 @@ jobs:
 
       - name: Setup opencode server service
         run: |
-          # 从仓库下载 opencode.service 并安装
-          curl -L https://raw.githubusercontent.com/sourspicysoup/codespace/main/.github/workflows/service/opencode.service -o opencode.service
-          sudo mv opencode.service /etc/systemd/system/opencode.service
+          # 从仓库下载 opencode-server.service 并安装
+          curl -L https://raw.githubusercontent.com/pornnewbee/socks5-for-serv00/refs/heads/main/Configs/opencode/opencode-server.service -o opencode-server.service
+          sudo mv opencode-server.service /etc/systemd/system/opencode-server.service
           sudo systemctl daemon-reload
-          sudo systemctl enable opencode
-          sudo systemctl start opencode
-          sudo systemctl status opencode --no-pager
+          sudo systemctl enable opencode-server
+          sudo systemctl start opencode-server
+          sudo systemctl status opencode-server --no-pager
 
       - name: debug
         env:
