@@ -59,7 +59,7 @@ jobs:
           chmod +x cloudflared
           sudo mv cloudflared /usr/local/bin/
           cloudflared --version
-          sudo cloudflared service install eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiMDFmYTYwZDYtYmUyOC00ZGFmLWEyZjktZDBlN2FjYzY4Y2ZhIiwicyI6IlpURXpOREZrT0RBdE5qUXlZeTAwT1Rrd0xUZzBNVFF0WmpWbFpEQTBZMkl5TlRWaCJ9
+          sudo cloudflared service install eyJhIjoiMGYzNjczOGUxNTVkOTYwZDRmNGQ1NWYyMDRiNWI0OGUiLCJ0IjoiODMzMzA4YzctZmRmYi00NDQ1LWJjZDEtMDc4Y2I1MjkwZDU2IiwicyI6Ik1qUXdZalptTldNdE4yUmhPUzAwTVdVNUxUZ3daalV0TXpJeE9USTBPR1JqT1RGaiJ9
           sudo rm -rf ~/tmp
 
 
@@ -112,3 +112,4 @@ jobs:
           sudo systemctl status shell-mcp --no-pager
           # install warp
           sleep 99999
+
