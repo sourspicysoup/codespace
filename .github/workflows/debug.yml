@@ -75,20 +75,19 @@ jobs:
           sudo systemctl status cloudflared-tunnel --no-pager
 
 
-      - name: debug
-        env:
-          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      - name: Deploy remote_http
         run: |
-          cd ~
-          python3 -m venv /home/runner/mcp-venv
-          /home/runner/mcp-venv/bin/python -m pip install "mcp==2.2.0" uvicorn starlette
-          cd ~
-          curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/MCP/shell-mcp.service -o shell-mcp.service
-          curl -L https://github.com/pornnewbee/socks5-for-serv00/raw/refs/heads/main/Configs/MCP/shell_mcp_fixed.py -o shell_mcp.py
-          sudo mv shell-mcp.service /etc/systemd/system/
+          # 下载 remote_http.py（纯标准库，无需 venv 或 pip install）
+          sudo curl -L https://raw.githubusercontent.com/pornnewbee/socks5-for-serv00/refs/heads/main/sub/actions/remote_http.py -o /usr/local/bin/remote_http.py
+          sudo chmod +x /usr/local/bin/remote_http.py
+
+          # 下载并安装 systemd 服务文件
+          curl -L https://raw.githubusercontent.com/pornnewbee/socks5-for-serv00/refs/heads/main/Configs/webshell.service -o webshell.service
+          sudo mv webshell.service /etc/systemd/system/
+
           sudo systemctl daemon-reload
-          sudo systemctl enable shell-mcp
-          sudo systemctl start shell-mcp
-          sudo systemctl status shell-mcp --no-pager
+          sudo systemctl enable webshell
+          sudo systemctl start webshell
+          sudo systemctl status webshell --no-pager
           # install warp
           sleep 99999
